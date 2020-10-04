@@ -9,6 +9,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
+import moment from 'moment';
+
+import Post from './Post'
 
 import "./Card.css"
 
@@ -40,8 +43,10 @@ export default function CardItem(props) {
     const classes = useStyles();
     const avatar = <Avatar aria-label="recipe"
                            className={classes.avatar}> {item.author.charAt(0).toUpperCase()}</Avatar>
-    return (<Card key={`card${item.id}`} className={classes.root} style={{}}>
-        <CardHeader avatar={avatar} title={item.title} subheader="September 14, 2016"/>
+
+    let created_at = moment(item.created).format("llll");
+    return (<Card key={`card${item.id}`} className={classes.root}>
+        <CardHeader avatar={avatar} title={item.title} subheader={created_at}/>
         <CardMedia className={classes.media} image={require(`../images/${item.cover}`)} title={item.author}/>
         <CardContent>
             <Typography variant="body2" color="textSecondary" component="p"
