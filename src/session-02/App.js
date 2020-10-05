@@ -9,6 +9,8 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Slide from '@material-ui/core/Slide';
 import './App.css';
 
+import Post from "./components/Post"
+
 // import Post from "./components/Post";
 import PostList from "./components/PostList";
 import data from './request/posts.json';
@@ -42,13 +44,13 @@ function App(props) {
             <HideOnScroll {...props}>
                 <AppBar>
                     <Toolbar>
-                        <Typography variant="h6">Main Menu</Typography>
+                        <Typography variant="h6">Learning React</Typography>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
             <Toolbar/>
             <Container style={{marginTop: 50, marginBottom: 50}} maxWidth="md">
-                <Grid container justify="center" spacing={3}>
+                <Grid container justify="center" spacing={4}>
                     <PostList data={data}/>
                 </Grid>
             </Container>
