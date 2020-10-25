@@ -40,11 +40,14 @@ export default function RegisterUser(props) {
         }
     };
 
+    const selectAvatar = () => {
+        document.getElementById('avatar').click();
+    }
+
     const submitForm = (event) => {
         event.preventDefault();
-
         props.onSubmit({
-            avatar: null,
+            avatar: (event.target.avatar.files.length > 0) ? URL.createObjectURL(event.target.avatar.files[0]) : null,
             firstName: event.target.firstName.value,
             lastName: event.target.lastName.value,
             phone: event.target.phone.value,
@@ -59,8 +62,9 @@ export default function RegisterUser(props) {
 
     return (<form onSubmit={submitForm} className={classes.root} noValidate autoComplete="off">
         <Grid container className={classes.actionBtns}>
-            <Button variant="contained" color="primary">Change Picture</Button>
+            <Button variant="contained" color="primary" onClick={selectAvatar}>Change Picture</Button>
             <Button variant="contained" color="secondary" type={"submit"}>Submit</Button>
+            <input type="file" id="avatar" name="avatar" hidden/>
         </Grid>
         <Grid container>
             <Grid item xs>

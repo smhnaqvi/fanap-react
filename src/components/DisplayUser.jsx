@@ -13,11 +13,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DisplayUser(props) {
     const classes = useStyles();
-    console.log(props.data)
     return (<div className={classes.cardStyle} style={{}}>
-        <Avatar alt="Remy Sharp" style={{alignItems: "center"}} src="/static/images/avatar/1.jpg"
+        <Avatar alt={props.data.email} style={{alignItems: "center"}} src={props.data.avatar}
                 className={classes.large}/>
-        {(props.data.firstName && props.data.lastName) ? <h3>{props.data.firstName + props.data.lastName}</h3> : ""}
+        {(props.data.firstName && props.data.lastName) ? <h3>{props.data.firstName +" "+ props.data.lastName}</h3> : ""}
         <div>{props.data.email}</div>
         <div>{props.data.phone}</div>
         <div>{props.data.birthDate}</div>
