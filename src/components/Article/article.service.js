@@ -1,5 +1,6 @@
 import {db as database} from "services"
 const db = database.ref("/articles")
+var articles = [];
 class ArticleService {
     getAll(){
         return db;

@@ -1,16 +1,14 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React from "react";
+import { toast } from "react-toastify";
+import { Link, useHistory } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Button from "components/Button";
+import { useAuth } from "providers/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,10 +32,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const history = useHistory();
+  const { signUp } = useAuth();
+  const [state, setState] = React.useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+  const [loading, setLoading] = React.useState(false);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setState(st => ({ ...st, [name]: value }));
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setLoading(true);
+    const { name, email, password } = state;
+    signUp(email, password, name)
+      .then(() => history.replace("/"))
+      .catch(error => {
+        setLoading(false);
+        console.log(error);
+        toast.error(error.message);
+      });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
         </Avatar>
@@ -46,27 +69,17 @@ export default function SignUp() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
+                id="name"
+                label="name"
+                name="name"
                 autoComplete="lname"
+                value={state.name}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -78,6 +91,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={state.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -90,6 +105,8 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={state.password}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
@@ -99,6 +116,8 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            loading={loading}
+            onClick={handleSubmit}
           >
             Sign Up
           </Button>

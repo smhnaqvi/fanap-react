@@ -9,4 +9,3 @@ firebase.initializeApp(config.firebase);
 export const auth = firebase.auth();
 export const storage = firebase.storage();
 export const db = firebase.database();
-
