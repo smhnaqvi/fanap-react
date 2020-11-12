@@ -13,6 +13,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { toast } from 'react-toastify';
+import ReactHtmlParser from "react-html-parser"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +89,7 @@ export const ArticleCard = (props) => {
         <CardMedia className={classes.media} image={item.image} title={item.title}/>
         <CardContent>
           <Typography noWrap variant="body2" color="textSecondary" component="p">
-            {item.body}
+            {ReactHtmlParser(item.body)}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
