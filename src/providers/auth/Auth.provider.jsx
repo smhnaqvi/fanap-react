@@ -14,9 +14,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signUp = (email, password, name) => {
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(async user => {
+    return auth.createUserWithEmailAndPassword(email, password).then(async user => {
         if (!!user) {
           await auth.currentUser.updateProfile({ displayName: name });
         }

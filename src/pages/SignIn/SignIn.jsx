@@ -48,7 +48,9 @@ export default function SignIn() {
     setLoading(true);
     const { email, password } = state;
     signIn(email, password)
-      .then(() => history.replace("/"))
+      .then((e) => {
+        history.replace("/")
+      })
       .catch(error => {
         setLoading(false);
         toast.error(error.message);

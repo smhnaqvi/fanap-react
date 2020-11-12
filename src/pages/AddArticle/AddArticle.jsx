@@ -6,25 +6,87 @@ import Button from "components/Button";
 import { ArticleService } from "components/Article";
 import { useForm } from "react-hook-form";
 import { Editor } from '@tinymce/tinymce-react';
+import {storage} from 'services/firebase'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  articleImage:{
+    height:"200px",
+    objectFit: 'content',
+  }
+}));
 
 export default function AddArticle() {
   const { register, errors, reset, handleSubmit } = useForm();
   const [body,setBody] = useState("");
+  const [image,setImage] = useState(null);
+  const [articleImageUrl,setArticleImageUrl] = useState({imageUrl:null,isUploaded:false});
+  const [loading, setLoading] = React.useState(false);
+
+
   const onSubmit = article => {
-    article.body = body;
-    console.log(article);
-    ArticleService.create(article)
-      .then(() => toast.success("article is added successfully!"))
-      .catch(error => console.log(error));
+    if(!!image === false){
+      toast.error("select image");
+      return;
+    }
+
+    setLoading(true);
+    const uploadTask = storage.ref(`articles/${image.name}`).put(image);
+    uploadTask.on("state_chnaged",snapshot=>{},error=>{console.log(error)},() => {
+      storage.ref("articles").child(image.name).getDownloadURL().then(url=>{
+        setArticleImageUrl({
+          imageUrl:url,
+          isUploaded:true,
+        });
+        article.body = body;
+        article.imageUrl = url;
+        console.log(article);
+        ArticleService.create(article)
+          .then(() => toast.success("article is added successfully!"))
+          .catch(error => toast.error(error.message));
+          setLoading(false);
+      })
+    })
   };
 
   const handleEditorChange = (content, editor) => {
     setBody(content)
   }
 
+
+  const handelFile = e => {
+    const file = e.target.files[0];
+    if(file){
+      console.log("file is selected:",file)
+      setImage(file);
+      setArticleImageUrl({
+        imageUrl:URL.createObjectURL(file),
+        isUploaded:false,
+      })
+    }else{
+      toast.warn("please select article image cover");
+    }
+  }
+
+  const classes = useStyles();
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2} style={{ marginTop: 16 }}>
+      <Grid item xs={12}>
+         <img src={articleImageUrl.imageUrl} className={classes.articleImage}/>
+      </Grid>
+      <Grid item xs={12}>
+          <input
+          accept="image/*"
+            name="cover"
+            label="cover"
+            defaultValue=""
+            variant="outlined"
+            onChange={handelFile}
+            type="file"
+          />
+        </Grid>
         <Grid item xs={12}>
           <TextField
             name="title"
@@ -68,17 +130,14 @@ export default function AddArticle() {
        />
         </Grid>
         <Grid item xs={12}>
-          <Button
+        <Button
+            type="submit"
+            fullWidth
             variant="contained"
             color="primary"
-            type="submit"
-            style={{ marginRight: 8 }}
-          >
-            Submit
-          </Button>
-          <Button variant="contained" type="reset" onClick={reset}>
-            Reset
-          </Button>
+            className={classes.submit}
+            loading={loading}
+          >submit</Button>
         </Grid>
       </Grid>
     </form>

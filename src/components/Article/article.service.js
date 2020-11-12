@@ -12,7 +12,7 @@ class ArticleService {
         return db.child(key).update(value);
     }
     delete(key){
-        return db.child(key).delete();
+        return db.child(key).remove();
     }
     deleteAll(){
         return db.remove();
