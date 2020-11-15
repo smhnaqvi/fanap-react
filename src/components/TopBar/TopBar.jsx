@@ -5,10 +5,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import { useAuth } from "providers/auth";
-import Icon from '@material-ui/core/Icon';
+
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -19,6 +22,19 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     margin: theme.spacing(1, 1.5)
+  },
+  icons:{
+    display: 'flex',
+  },
+  nav:{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  userDisplayName:{
+    fontSize:15,
+    display:"flex",
+    marginRight:10
   }
 }));
 
@@ -47,7 +63,7 @@ export default function TopBar() {
         >
           Learning React
         </Typography>
-        <nav>
+        <nav className={classes.nav}>
           <Link
             variant="button"
             color="textPrimary"
@@ -55,7 +71,7 @@ export default function TopBar() {
             to="/"
             className={classes.link}
           >
-            Home
+            <HomeIcon  className={classes.icons}/>
           </Link>
           <Link
             variant="button"
@@ -64,7 +80,7 @@ export default function TopBar() {
             to="/add"
             className={classes.link}
           >
-            New Article
+          <PostAddIcon className={classes.icons} />
           </Link>
           {!!user && (
             <Link
@@ -74,17 +90,19 @@ export default function TopBar() {
               to="/profile"
               className={classes.link}
             >
-              <IconButton>
-               profile
-              </IconButton>
+              <AssignmentIndIcon className={classes.icons} />
             </Link>
           )}
-        </nav>
-        {!!user ? (
-          <Button variant="contained" onClick={signOut}>log Out</Button>
+          {!!user ? (
+          <React.Fragment>
+            <span className={classes.userDisplayName}>{user.displayName}</span>
+            <ExitToAppIcon  className={classes.icons}  onClick={signOut}/>
+          </React.Fragment>
         ) : (
           <Button variant="contained" component={RouterLink} to="/signin">Sign In</Button>
         )}
+        </nav>
+        
       </Toolbar>
     </AppBar>
   );

@@ -8,6 +8,9 @@ class ArticleService {
     create(article){
         return db.push(article);
     }
+    getSingle(key){
+        return db.child(key);
+    }
     update(key,value){
         return db.child(key).update(value);
     }

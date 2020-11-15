@@ -6,6 +6,5 @@ export default function useAuth() {
   if (auth === undefined) {
     throw new Error("useAuth must be used within AuthProvider");
   }
-
   return auth;
 }
