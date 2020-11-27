@@ -4,3 +4,4 @@ export { default as Scrollbar } from "./Scrollbar/Scrollbar";
 export { default as LoadingButton } from "./Button/LoadingButton";
 export { default as SplashScreen } from "./SplashScreen/SplashScreen";
 export * from "./Loading";
+export * from "./Toolbar/Toolbar";

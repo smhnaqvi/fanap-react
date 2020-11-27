@@ -1,4 +1,4 @@
-import Moment from "moment";
+import moment from "moment-jalaali";
 import random from "lodash/random";
 import faker from "faker";
 import {
@@ -23,7 +23,9 @@ const CATEGORIES = [
   "شخصی (آموزشی)",
   "مختلف"
 ];
-const START_DATE = Moment("2020-10-22", "YYYY-MM-DD").startOf();
+const START_DATE = moment("1399/08/01", "jYYYY/jMM/jDD")
+  .startOf("day")
+  .valueOf();
 
 createServer({
   models: {
@@ -93,7 +95,7 @@ createServer({
         entry.update({
           category: categories[Math.floor(Math.random() * 1000) % 10],
           amount: faker.random.number(),
-          date: START_DATE.add(random(30), "days").valueOf()
+          date: moment(START_DATE).add(random(29), "days").valueOf()
         })
       );
     });
@@ -135,7 +137,7 @@ createServer({
       return schema.entries.where({ categoryId: request.params.categoryId });
     });
     this.get("/entries/:timestamp", (schema, request) => {
-      const date = Moment(+request.params.timestamp);
+      const date = moment(+request.params.timestamp);
       return schema.entries.where(entry => date.isSame(entry.date, "day"));
     });
   }

@@ -9,12 +9,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Typography
+  TableRow
 } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { User } from "components/Auth";
-import { TableLoading } from "components/ui";
+import { TableLoading, Toolbar } from "components/ui";
 
 export function Users() {
   const { isLoading, data: users = [] } = useQuery<User[]>("/api/users");
@@ -39,7 +38,12 @@ export function Users() {
         <TableCell>{user.name}</TableCell>
         <TableCell>{user.userName}</TableCell>
         <TableCell align="right">
-          <IconButton edge="end" color="secondary" size="small">
+          <IconButton
+            edge="end"
+            color="secondary"
+            size="small"
+            onClick={e => e.stopPropagation()}
+          >
             <DeleteForeverIcon fontSize="small" />
           </IconButton>
         </TableCell>
@@ -49,9 +53,7 @@ export function Users() {
 
   return (
     <Paper>
-      <Typography variant="h6" style={{ padding: 16 }}>
-        لیست کاربران
-      </Typography>
+      <Toolbar title="کاربران" onAdd={() => console.log("add")} />
       <TableContainer style={{ height: 316, overflow: "auto" }}>
         <Table size="small">
           <TableHead>

@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import { Users } from "components/Users";
 import { Categories } from "components/Categories";
 import { MyCalendar } from "components/Calendar";
+import { Entries } from "components/Entries";
 
 export default function Home() {
   return (
@@ -15,6 +16,9 @@ export default function Home() {
       </Grid>
       <Grid item xs={3}>
         <MyCalendar />
+      </Grid>
+      <Grid item xs={12}>
+        <Entries />
       </Grid>
     </Grid>
   );

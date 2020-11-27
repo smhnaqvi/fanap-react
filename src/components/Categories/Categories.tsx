@@ -9,10 +9,10 @@ import {
   Radio,
   IconButton,
   Paper,
-  Typography,
   Divider
 } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { ListLoading, Toolbar } from "components/ui";
 
 export type Category = {
   id: number;
@@ -31,9 +31,8 @@ export function Categories() {
 
   const renderCategory = (cat: Category) => {
     return (
-      <>
+      <div key={cat.id}>
         <ListItem
-          key={cat.id}
           dense
           button
           selected={selected === cat}
@@ -56,17 +55,15 @@ export function Categories() {
           </ListItemSecondaryAction>
         </ListItem>
         <Divider variant="fullWidth" component="li" />
-      </>
+      </div>
     );
   };
 
   return (
     <Paper>
-      <Typography variant="h6" style={{ padding: 16 }}>
-        لیست دسته بندی ها
-      </Typography>
+      <Toolbar title="دسته بندی ها" onAdd={() => console.log("add")} />
       <List disablePadding dense style={{ height: 316, overflow: "auto" }}>
-        {categories.map(renderCategory)}
+        {isLoading ? <ListLoading rows={5} /> : categories.map(renderCategory)}
       </List>
     </Paper>
   );
