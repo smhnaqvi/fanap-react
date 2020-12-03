@@ -9,7 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Radio from '@material-ui/core/Radio'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
-
+import {useEntries} from "./../../providers/entries"
+import Axios from 'axios';
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
@@ -22,17 +23,19 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 export function UserTable({response,filter,setFilter}){
   const classes = useToolbarStyles();
+  const {setEntries} = useEntries();
 
   const [selected, setSelected] = React.useState();
 
   const handleOnClickRow = (user) => () => {
     user !== selected ? setSelected(user) : setSelected(undefined);
-    console.log(filter)
-    setFilter({
-      date:null,
-      category:null,
-      user:selected,
-    })
+    setEntries(user.entries);
+    // Axios.get("",{
+    //   baseURL: "api/",
+    //   headers: { token: token }}
+    // ).then((response) => {
+    //   console.log(response)
+    // }).catch(error => console.log(error));
   };
 
   return (

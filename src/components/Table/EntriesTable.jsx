@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import TableContainer from '@material-ui/core/TableContainer';
 import moment from "moment-jalaali";
+import {useEntries} from "./../../providers/entries"
+
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     // paddingLeft: theme.spacing(2),
@@ -28,6 +30,12 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 export function EntriesTable({response}){
   const classes = useToolbarStyles();
+  const {entries,setEntries} = useEntries();
+  React.useEffect(() => {
+    if(!!response.data){
+      setEntries(response.data)
+    }
+  })
   return (
     <TableContainer>
       <Table stickyHeader size="small">
@@ -42,7 +50,7 @@ export function EntriesTable({response}){
           </TableRow>
         </TableHead>
         <TableBody>
-          {response.data.map((row, index) => (
+          {entries.map((row, index) => (
             <TableRow hover role="checkbox" tabIndex={-1} key={index}>
               <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right">{row.title}</TableCell>
