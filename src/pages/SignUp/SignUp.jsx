@@ -52,7 +52,11 @@ export default function SignUp() {
     const { name, username, password } = state;
     signUp(username, password, name)
       .then((response) => {
-        setUser(response.user)
+        setUser(response.data.user)
+        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("user", JSON.stringify(response.data.user))
+        setLoading(false)
+        history.replace("/")
       })
       .catch(error => {
         setLoading(false);

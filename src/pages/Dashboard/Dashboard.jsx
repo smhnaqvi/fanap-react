@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
+    overflowY:"scroll",
+    height: 335,
+    overflow: "auto",
+    background: "#fff",
+    boxShadow: "0 1em 4em rgba(0, 0, 0, 0.07)",
+    borderRadius: '1em'
   },
 }));
 
@@ -41,30 +47,30 @@ export default function Dashboard() {
   return (
     <>
       <TopBar />
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-          <Paper className={classes.paper}>
-              <TableUsers />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Paper className={classes.paper}>
-              <TableCategories />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Calendar locale="fa"/>
-          </Grid>
-         
-
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <TableEntries />
-            </Paper>
-          </Grid>
+      <Grid container spacing={2} style={{marginTop:20}}>
+        <Grid item xs={6}>
+        <Paper className={classes.paper}>
+            <TableUsers />
+          </Paper>
         </Grid>
+
+        <Grid item xs={3}>
+          <Paper className={classes.paper}>
+            <TableCategories />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={3}>
+          <Calendar locale="fa"/>
+        </Grid>
+        
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <TableEntries />
+          </Paper>
+        </Grid>
+      </Grid>
     </>
   );
 }

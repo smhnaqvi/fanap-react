@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
   const signOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    history.replace("/signin")
+    history.push("/signin")
   };
 
   const value = React.useMemo(() => ({ token, user,setToken,setUser, signUp, signIn, signOut }), [user,token]);

@@ -21,9 +21,6 @@ const useToolbarStyles = makeStyles((theme) => ({
   title: {
     flex: '1 1 100%',
   },
-  container:{
-    maxHeight: 300,
-  },
   MuiTableCell:{
 
   }
@@ -33,7 +30,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 export function EntriesTable({response}){
   const classes = useToolbarStyles();
   return (
-    <TableContainer className={classes.container}>
+    <TableContainer>
       <Table stickyHeader size="small">
         <TableHead>
           <TableRow>

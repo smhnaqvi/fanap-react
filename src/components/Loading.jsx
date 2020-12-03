@@ -1,4 +1,5 @@
 import React from 'react'
+import LinearProgress  from "@material-ui/core/LinearProgress"
 
 const  WithLoading = (Component,request) => {
     return function LoadingComponent (props){
@@ -14,7 +15,7 @@ const  WithLoading = (Component,request) => {
 
         })
 
-        return loading ? <div>Loading ...</div> : <Component response={response} {...props} />   
+        return loading ? <LinearProgress color="primary" /> : <Component response={response} {...props} />   
     }
 }
 export default WithLoading;

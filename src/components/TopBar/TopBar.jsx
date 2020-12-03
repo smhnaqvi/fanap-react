@@ -11,7 +11,6 @@ import { useAuth } from "providers/auth";
 import HomeIcon from '@material-ui/icons/Home';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -34,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   userDisplayName:{
     fontSize:15,
     display:"flex",
-    marginRight:10
+    marginLeft:10
   }
 }));
 
@@ -47,23 +46,8 @@ export default function TopBar() {
         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle} >
         </Typography>
         <nav className={classes.nav}>
-          <Link
-            variant="button"
-            color="textPrimary"
-            component={RouterLink}
-            to="/"
-            className={classes.link}
-          >
+          <Link variant="button" color="textPrimary" component={RouterLink} to="/" className={classes.link} >
             <HomeIcon  className={classes.icons}/>
-          </Link>
-          <Link
-            variant="button"
-            color="textPrimary"
-            component={RouterLink}
-            to="/add"
-            className={classes.link}
-          >
-          <PostAddIcon className={classes.icons} />
           </Link>
           {!!user && (
             <Link
@@ -71,8 +55,7 @@ export default function TopBar() {
               color="textPrimary"
               component={RouterLink}
               to="/profile"
-              className={classes.link}
-            >
+              className={classes.link} >
               <AssignmentIndIcon className={classes.icons} />
             </Link>
           )}

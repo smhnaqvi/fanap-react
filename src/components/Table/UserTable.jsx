@@ -15,16 +15,6 @@ const useToolbarStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
   },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
   title: {
     flex: '1 1 100%',
   },
@@ -53,7 +43,7 @@ export function UserTable({response}){
         </TableHead>
         <TableBody>
           {response.data.map((user, index) => (
-            <TableRow hover key={index} hover onClick={handleOnClickRow(user)} selected={user === selected} >
+            <TableRow hover key={index} onClick={handleOnClickRow(user)} selected={user === selected} >
               <TableCell padding="none" align="right">
                 <Radio checked={selected === user} disableRipple size="small" />
               </TableCell>
