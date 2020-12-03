@@ -6,14 +6,15 @@ const  WithLoading = (Component,request) => {
         const [loading, setLoading] = React.useState(true);
         const [response,setResponse] = React.useState([]);
 
-        request.then((response) => {
-            setResponse(response);
-            setLoading(false);
-        }).catch(error => {
-            console.log(error);
-            setLoading(false);
-
-        })
+        if (request){
+            request.then((response) => {
+                setResponse(response);
+                setLoading(false);
+            }).catch(error => {
+                console.log(error);
+                setLoading(false);
+            })
+        }
 
         return loading ? <LinearProgress color="primary" /> : <Component response={response} {...props} />   
     }

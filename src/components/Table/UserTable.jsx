@@ -1,5 +1,5 @@
 import React from 'react';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,13 +20,19 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-export function UserTable({response}){
+export function UserTable({response,filter,setFilter}){
   const classes = useToolbarStyles();
 
   const [selected, setSelected] = React.useState();
 
   const handleOnClickRow = (user) => () => {
     user !== selected ? setSelected(user) : setSelected(undefined);
+    console.log(filter)
+    setFilter({
+      date:null,
+      category:null,
+      user:selected,
+    })
   };
 
   return (

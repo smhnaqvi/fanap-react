@@ -31,7 +31,24 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
 
-  const { user, token } = useAuth();
+  const { user, token,setUser,setToken } = useAuth();
+  const [filter,setFilter] = useState({
+    date:null,
+    category:null,
+    user:null
+  })
+
+  
+
+  React.useEffect(() => {
+    const localUser = localStorage.getItem('user');
+    const localToken = localStorage.getItem('token');
+    console.log(!!user === false && !!localUser === true)
+    if(!!user === false && !!localUser === true){
+      setUser(JSON.parse(localUser));
+      setToken(localToken);
+    }
+  })
 
   const instance = axios.create({
     baseURL: "api/",
@@ -50,13 +67,15 @@ export default function Dashboard() {
       <Grid container spacing={2} style={{marginTop:20}}>
         <Grid item xs={6}>
         <Paper className={classes.paper}>
-            <TableUsers />
+            <h3>کاربران</h3>
+            <TableUsers filter={filter} setFilter={setFilter} />
           </Paper>
         </Grid>
 
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            <TableCategories />
+            <h3>دسته بندی ها</h3>
+            <TableCategories filter={{filter,setFilter}} />
           </Paper>
         </Grid>
 
@@ -67,7 +86,7 @@ export default function Dashboard() {
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <TableEntries />
+            <TableEntries filter={{filter,setFilter}} />
           </Paper>
         </Grid>
       </Grid>

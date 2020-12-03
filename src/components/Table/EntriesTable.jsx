@@ -1,15 +1,14 @@
 import React from 'react';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import TableContainer from '@material-ui/core/TableContainer';
-
+import moment from "moment-jalaali";
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     // paddingLeft: theme.spacing(2),
@@ -47,7 +46,7 @@ export function EntriesTable({response}){
             <TableRow hover role="checkbox" tabIndex={-1} key={index}>
               <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right">{row.title}</TableCell>
-              <TableCell align="right">{row.date}</TableCell>
+              <TableCell align="right">{moment(row.date).format("jYYYY/jMM/jDD")}</TableCell>
               <TableCell align="right">{row.amount}</TableCell>
               <TableCell align="right">{row.category.name}</TableCell>
               <TableCell align="right">
