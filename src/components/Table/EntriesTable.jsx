@@ -32,7 +32,7 @@ export function EntriesTable({response}){
   const classes = useToolbarStyles();
   const {entries,setEntries} = useEntries();
   React.useEffect(() => {
-    if(!!response.data){
+    if(!!response.data && !!entries === false){
       setEntries(response.data)
     }
   })
